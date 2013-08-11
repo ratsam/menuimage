@@ -1,0 +1,7 @@
+.idea/
+*.iml
+
+release.properties
+pom.xml.*
+
+.DS_Store
