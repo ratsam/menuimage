@@ -6,7 +6,6 @@ package com.lumoza.android.imagemenu;
  * @author Maksim Zakharov
  * @since 1.0
  */
-@Deprecated
 public class ImageLoaderFactoryHolder {
 
     private static volatile ImageLoaderFactory factory;
