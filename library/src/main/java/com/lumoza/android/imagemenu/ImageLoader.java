@@ -11,4 +11,11 @@ public interface ImageLoader {
      * Force 'online' mode.
      */
     void reload();
+
+    /**
+     * Get image load status.
+     *
+     * @return current status
+     */
+    LoadStatus getStatus();
 }

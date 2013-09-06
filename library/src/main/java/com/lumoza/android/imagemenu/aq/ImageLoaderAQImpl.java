@@ -8,6 +8,7 @@ import com.lumoza.android.ImageMenu;
 import com.lumoza.android.imagemenu.ImageLoadErrorListener;
 import com.lumoza.android.imagemenu.ImageLoadedListener;
 import com.lumoza.android.imagemenu.ImageLoader;
+import com.lumoza.android.imagemenu.LoadStatus;
 
 /**
  * Android Query based image loader.
@@ -19,8 +20,9 @@ public class ImageLoaderAQImpl implements ImageLoader, ImageLoadErrorListener, I
     private final boolean offline;
     private final String url;
 
-    private final ImageMenu imageMenu;
+    private LoadStatus status;
 
+    private final ImageMenu imageMenu;
     private final AQuery aq;
 
     public ImageLoaderAQImpl(boolean offline, String url, ImageMenu imageMenu) {
@@ -36,6 +38,11 @@ public class ImageLoaderAQImpl implements ImageLoader, ImageLoadErrorListener, I
     public void reload() {
         reset();
         loadUrl(); // Force load, don't check 'offline' state
+    }
+
+    @Override
+    public LoadStatus getStatus() {
+        return status;
     }
 
     public void load() {
@@ -58,8 +65,7 @@ public class ImageLoaderAQImpl implements ImageLoader, ImageLoadErrorListener, I
     }
 
     private void showCached(Bitmap bitmap) {
-        imageMenu.setImageBitmap(bitmap);
-        imageMenu.onLoad();
+        onLoad(bitmap);
     }
 
     private void loadUrl() {
@@ -76,16 +82,21 @@ public class ImageLoaderAQImpl implements ImageLoader, ImageLoadErrorListener, I
 
     @Override
     public void onError() {
+        status = LoadStatus.ERROR;
+
         imageMenu.onError();
     }
 
     @Override
     public void onLoad(Bitmap bitmap) {
-        imageMenu.setImageBitmap(bitmap);
-        imageMenu.onLoad();
+        status = LoadStatus.LOADED;
+
+        imageMenu.onLoad(bitmap);
     }
 
     private void reset() {
+        status = LoadStatus.LOADING;
+
         imageMenu.onLoadStart();
     }
 }

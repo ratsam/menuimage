@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import com.lumoza.android.imagemenu.ImageLoader;
 import com.lumoza.android.imagemenu.ImageLoaderFactoryHolder;
 import com.lumoza.android.imagemenu.LoadStatus;
 import com.lumoza.android.imagemenu.R;
@@ -24,7 +25,7 @@ public class ImageMenu extends RelativeLayout {
     private ImageView resultView;
     private View inProgressView;
 
-    private LoadStatus status;
+    private ImageLoader imageLoader;
 
     public ImageMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,11 +55,15 @@ public class ImageMenu extends RelativeLayout {
     }
 
     public void load(String url) {
-        ImageLoaderFactoryHolder.getFactory().createLoader(this, url);
+        imageLoader = ImageLoaderFactoryHolder.getFactory().createLoader(this, url);
     }
 
     public LoadStatus getStatus() {
-        return status;
+        if (imageLoader != null) {
+            return imageLoader.getStatus();
+        } else {
+            throw new IllegalStateException("ImageMenu#load() method was never called");
+        }
     }
 
     public ImageView getResultView() {
@@ -76,26 +81,20 @@ public class ImageMenu extends RelativeLayout {
         return mInflater;
     }
 
-    public void setImageBitmap(Bitmap bitmap) {
-        ((ImageView) findViewById(R.id.imm__image_view)).setImageBitmap(bitmap);
-    }
-
     public void onError() {
-        status = LoadStatus.ERROR;
-
         inProgressView.setVisibility(View.GONE);
         if (errorView != null) {
             errorView.setVisibility(View.VISIBLE);
         }
     }
 
-    public void onLoad() {
-        status = LoadStatus.LOADED;
+    public void onLoad(Bitmap bitmap) {
         inProgressView.setVisibility(View.GONE);
+
+        ((ImageView) findViewById(R.id.imm__image_view)).setImageBitmap(bitmap);
     }
 
     public void onLoadStart() {
-        status = LoadStatus.LOADING;
         inProgressView.setVisibility(View.VISIBLE);
 
         if (errorView != null) {
