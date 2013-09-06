@@ -20,6 +20,12 @@
             <groupId>android</groupId>
             <artifactId>android</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.android-query</groupId>
+            <artifactId>android-query</artifactId>
+            <version>0.25.9</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ImageMenu">
+        <attr name="android:src"/>
+        <attr name="error_style" format="reference"/>
+        <attr name="progress_style" format="reference"/>
+    </declare-styleable>
+
+    <style name="ImageMenu.LoadError" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:src">@drawable/imm__error</item>
+        <item name="android:scaleType">matrix</item>
+    </style>
+
+    <style name="ImageMenu.LoadProgress" parent="android:Widget">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+</resources>
