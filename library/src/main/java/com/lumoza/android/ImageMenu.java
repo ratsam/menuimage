@@ -7,16 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import com.lumoza.android.imagemenu.Action;
 import com.lumoza.android.imagemenu.ImageLoader;
 import com.lumoza.android.imagemenu.ImageLoaderFactoryHolder;
 import com.lumoza.android.imagemenu.LoadStatus;
+import com.lumoza.android.imagemenu.MenuItemClickListener;
+import com.lumoza.android.imagemenu.PopupMenuFactory;
 import com.lumoza.android.imagemenu.R;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Maksim Zakharov
  * @since 1.0
  */
-public class ImageMenu extends RelativeLayout {
+public class ImageMenu extends RelativeLayout implements View.OnClickListener {
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -26,6 +32,7 @@ public class ImageMenu extends RelativeLayout {
     private View inProgressView;
 
     private ImageLoader imageLoader;
+    private List<Action> actions = new LinkedList<Action>();
 
     public ImageMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,6 +49,10 @@ public class ImageMenu extends RelativeLayout {
     private void init(Context context) {
         mContext = context;
 
+        inflateViews();
+    }
+
+    private void inflateViews() {
         errorView = getInflater().inflate(R.layout.imm__error, this, false);
         errorView.setVisibility(View.GONE);
         addView(errorView);
@@ -54,8 +65,52 @@ public class ImageMenu extends RelativeLayout {
         addView(inProgressView);
     }
 
+    public void addAction(int id, CharSequence title, MenuItemClickListener listener) {
+        final Action action = new Action();
+        action.setId(id);
+        action.setTitle(title);
+        action.setListener(listener);
+        actions.add(action);
+    }
+
+    public void addAction(int id, int titleResource, MenuItemClickListener listener) {
+        final Action action = new Action();
+        action.setId(id);
+        action.setTitle(titleResource);
+        action.setListener(listener);
+        actions.add(action);
+    }
+
+    @Override
+    public void onClick(View v) {
+        final LoadStatus status = getStatus();
+
+        final List<Action> clickActions = new LinkedList<Action>(actions);
+
+        if (status == LoadStatus.ERROR) {
+            clickActions.add(0, getReloadAction());
+        } else if (clickActions.size() == 1) {
+            // If there is only one action, force using it and exit.
+            final Action onlyAction = clickActions.get(0);
+            onlyAction.getListener().onClick(this, onlyAction.getId());
+            return;
+        }
+
+        // TODO: retrieve provided menu factory
+        new PopupMenuFactory().makeMenu(getContext(), this, clickActions);
+    }
+
+    private Action getReloadAction() {
+        final Action reload = new Action();
+        reload.setId(-501);
+        reload.setTitle("Reload image");
+        reload.setListener(null);
+        return reload;
+    }
+
     public void load(String url) {
         imageLoader = ImageLoaderFactoryHolder.getFactory().createLoader(this, url);
+        setOnClickListener(this);
     }
 
     public LoadStatus getStatus() {
