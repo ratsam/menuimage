@@ -24,6 +24,7 @@
         <dependency>
             <groupId>com.lumoza.android.menuimage</groupId>
             <artifactId>library</artifactId>
+            <type>apklib</type>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
