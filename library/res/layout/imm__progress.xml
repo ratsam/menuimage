@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
-             style="@style/ImageMenu.LoadProgress"
+             style="?attr/imageMenuProgressStyle"
              android:id="@+id/imm__progress"/>

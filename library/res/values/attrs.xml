@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ImageMenuStyleable">
+        <attr name="imageMenuErrorStyle" format="reference"/>
+        <attr name="imageMenuProgressStyle" format="reference"/>
+        <attr name="imageMenuResultStyle" format="reference"/>
+    </declare-styleable>
+</resources>

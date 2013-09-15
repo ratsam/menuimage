@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme" parent="android:Theme">
+        <item name="imageMenuErrorStyle">@style/ImageMenu.LoadError</item>
+        <item name="imageMenuProgressStyle">@style/ImageMenu.LoadProgress</item>
+        <item name="imageMenuResultStyle">@style/ImageMenu.Result</item>
+    </style>
+</resources>
