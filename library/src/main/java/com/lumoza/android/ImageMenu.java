@@ -103,8 +103,8 @@ public class ImageMenu extends RelativeLayout implements View.OnClickListener {
     private Action getReloadAction() {
         final Action reload = new Action();
         reload.setId(-501);
-        reload.setTitle("Reload image");
-        reload.setListener(null);
+        reload.setTitle(R.string.imm__reload);
+        reload.setListener(null); // TODO: listen and reload
         return reload;
     }
 
