@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.lumoza.android.ImageMenu;
+import com.lumoza.android.imagemenu.MenuFactoryHolder;
 import com.lumoza.android.imagemenu.MenuItemClickListener;
+import com.lumoza.android.imagemenu.PopupMenuFactory;
 import com.lumoza.android.imagemenu.aq.ImageLoaderFactoryAQImpl;
 import com.lumoza.android.imagemenu.ImageLoaderFactoryHolder;
 
@@ -21,6 +23,7 @@ public class MainActivity extends Activity {
 
         final SharedPreferences preferences = getSharedPreferences("imagemenu", MODE_PRIVATE);
         ImageLoaderFactoryHolder.setFactory(new ImageLoaderFactoryAQImpl(preferences));
+        MenuFactoryHolder.setFactory(new PopupMenuFactory());
 
         setContentView(R.layout.main_activity);
     }

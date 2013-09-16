@@ -11,8 +11,8 @@ import com.lumoza.android.imagemenu.Action;
 import com.lumoza.android.imagemenu.ImageLoader;
 import com.lumoza.android.imagemenu.ImageLoaderFactoryHolder;
 import com.lumoza.android.imagemenu.LoadStatus;
+import com.lumoza.android.imagemenu.MenuFactoryHolder;
 import com.lumoza.android.imagemenu.MenuItemClickListener;
-import com.lumoza.android.imagemenu.PopupMenuFactory;
 import com.lumoza.android.imagemenu.R;
 
 import java.util.LinkedList;
@@ -96,8 +96,7 @@ public class ImageMenu extends RelativeLayout implements View.OnClickListener {
             return;
         }
 
-        // TODO: retrieve provided menu factory
-        new PopupMenuFactory().makeMenu(getContext(), this, clickActions);
+        MenuFactoryHolder.getFactory().makeMenu(getContext(), this, clickActions);
     }
 
     private Action getReloadAction() {
