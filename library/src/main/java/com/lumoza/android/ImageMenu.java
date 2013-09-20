@@ -96,7 +96,9 @@ public class ImageMenu extends RelativeLayout implements View.OnClickListener {
             return;
         }
 
-        MenuFactoryHolder.getFactory().makeMenu(getContext(), this, clickActions);
+        if (!clickActions.isEmpty()) {
+            MenuFactoryHolder.getFactory().makeMenu(getContext(), this, clickActions);
+        }
     }
 
     private Action getReloadAction() {
