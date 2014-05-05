@@ -53,7 +53,7 @@
             <dependency>
                 <groupId>android</groupId>
                 <artifactId>android</artifactId>
-                <version>4.4.2_r2</version>
+                <version>4.4.2_r3</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
@@ -95,6 +95,12 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <sourcepath>${basedir}/target/generated-sources</sourcepath>
+                        <sourceFileExcludes>
+                            <exclude>**/R.java</exclude>
+                        </sourceFileExcludes>
+                    </configuration>
                 </plugin>
 
                 <plugin>
